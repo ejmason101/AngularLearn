@@ -1,0 +1,45 @@
+<!-- <textarea rows="6" [value]="newToDo" #todoInput></textarea> -->
+<!-- <textarea rows="6" [(ngModel)]="enteredValue"></textarea> -->
+<mat-card>
+
+    <form (submit)="onAddTodo(todoForm)" #todoForm="ngForm">
+        <h1>Create TODO </h1>
+
+        <mat-form-field>
+            <mat-label>Task Title</mat-label>
+            <input
+             matInput
+             type="text"
+             name="title"
+             ngModel
+             required
+             #title="ngModel">
+             <mat-error *ngIf="title.invalid">Enter corrent title</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field>
+            <mat-label>Description of Task</mat-label>
+            <textarea
+             matInput
+             rows="6"
+             name="content"
+             ngModel
+             required
+             #content="ngModel"></textarea>
+             <mat-error *ngIf="content.invalid">Enter corrent content</mat-error>
+
+        </mat-form-field>
+    
+    
+                
+    
+        <button
+            mat-raised-button
+            color="accent"
+            type="submit">Create TODO</button>
+
+    </form>
+    
+</mat-card>
+
+<p> {{ newToDo }}</p>
