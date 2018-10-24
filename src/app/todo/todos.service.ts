@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import {Subject } from 'rxjs';
 import { map } from 'rxjs/operators'
 
+import { Router } from "@angular/router";
+
 import { Todo } from './todo.model';
 
 // allows angjular to see at the root level, and it only creates 1 instance in the entire app
@@ -13,7 +15,7 @@ export class TodosService {
     private todos: Todo[] = [];
     private todosUpdated = new Subject<Todo[]>();
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private router: Router) {}
 
     getTodos(){
         this.http
@@ -40,6 +42,13 @@ export class TodosService {
         return this.todosUpdated.asObservable();
     }
 
+    // get to edit
+    getTodo(id: string) {
+        return this.http.get<{ _id: string; title: string; content: string }>(
+            'http://localhost:3000/api/todos/' + id
+            );
+    }
+
     addTodo(title: string, content: string) {
         console.log('adding new todo');
         const todo: Todo = {id: null, title: title, content: content};
@@ -48,14 +57,28 @@ export class TodosService {
             .post<{message: string, postId: string}>('http://localhost:3000/api/todos', todo)
             .subscribe((responseData) => {
                 const id = responseData.postId;
-
                 todo.id = id;
-                // push new post to local post only if there was 
-                // success from the server
                 this.todos.push(todo);
                 this.todosUpdated.next([...this.todos]);
+                this.router.navigate(["/"]);
 
             });
+    }
+
+    updateTodo(id: string, title: string, content: string) {
+        const todo: Todo = { id: id, title: title, content: content};
+        console.log('updateTodo');
+        this.http
+        .put("http://localhost:3000/api/todos/" + id, todo)
+        .subscribe(response => {
+            // update local posts
+            const updatedTodos = [...this.todos];
+            const oldTodoIndex = updatedTodos.findIndex(t => t.id === todo.id);
+            updatedTodos[oldTodoIndex] = todo;
+            this.todos = updatedTodos;
+            this.todosUpdated.next([...this.todos]);
+            this.router.navigate(["/"]);
+        });
     }
 
     deleteTodo(todoId: string) {
