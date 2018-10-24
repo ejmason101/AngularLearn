@@ -27,6 +27,7 @@ router.post("", (req, res, next) => {
 
 router.put("/:id", (req, res, next) => {
     const todo = new Todo({
+        _id: req.body.id,
         title: req.body.title,
         content: req.body.content
     })

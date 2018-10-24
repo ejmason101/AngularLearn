@@ -1,4 +1,5 @@
-<mat-accordion multi="true" *ngIf="todos.length > 0">
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-accordion multi="true" *ngIf="!isLoading && todos.length > 0">
     <mat-expansion-panel *ngFor="let todo of todos">
         <mat-expansion-panel-header>
             Title: {{todo.title}}
@@ -14,4 +15,4 @@
     </mat-expansion-panel>
 </mat-accordion>
 
-<p class=" info-text mat-body-1" *ngIf="todos.length <= 0">No Todo Tasks Yet!</p>
+<p class=" info-text mat-body-1" *ngIf="todos.length <= 0 && !isLoading">No Todo Tasks Yet!</p>

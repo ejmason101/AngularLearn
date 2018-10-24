@@ -36,8 +36,13 @@ export class TodoCreateComponent implements OnInit {
         // extract id and use, in edit mode
         this.mode = 'edit';
         this.todoId = paramMap.get('todoId');
+        
+        // start showing loading here
+        this.isLoading = true;
         // this.todo = this.todosService.getTodo(this.todoId).subscribe();
         this.todosService.getTodo(this.todoId).subscribe(todoData => {
+          // stop showing loading here
+          this.isLoading = false;
           this.todo = {
             id: todoData._id,
             title: todoData.title,

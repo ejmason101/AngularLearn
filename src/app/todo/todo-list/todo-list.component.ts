@@ -20,23 +20,20 @@ export class TodoListComponent implements OnInit, OnDestroy {
     
     
     todos: Todo[] = [];
+    isLoading = false;
     private todosSub: Subscription;
 
     constructor(public todosService: TodosService) {}
     
     ngOnInit(){
-        this.todosService.getTodos();
+        this.isLoading = true;
+        this.todosService.getTodos();        
+
         this.todosSub = this.todosService.getTodoUpdateListener()
             .subscribe((todos: Todo[]) => {
+                this.isLoading = false;
                 this.todos = todos;
             });
-
-            // doesn't destroy when the component is not part of the DOM
-            // source of memory leak
-        // this.todosService.getTodoUpdateListener()
-        //     .subscribe((todos: Todo[])=> {
-        //         this.todos = todos;
-        //     });
     }
 
     onDelete(todoId: string) {

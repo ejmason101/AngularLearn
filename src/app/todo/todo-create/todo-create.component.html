@@ -1,9 +1,8 @@
 <!-- <textarea rows="6" [value]="newToDo" #todoInput></textarea> -->
 <!-- <textarea rows="6" [(ngModel)]="enteredValue"></textarea> -->
 <mat-card>
-
-    <form (submit)="onSaveTodo(todoForm)" #todoForm="ngForm">
-        <h1>Create TODO </h1>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form (submit)="onSaveTodo(todoForm)" #todoForm="ngForm" *ngIf="!isLoading">
 
         <mat-form-field>
             <mat-label>Task Title</mat-label>

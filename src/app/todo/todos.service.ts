@@ -59,6 +59,7 @@ export class TodosService {
                 const id = responseData.postId;
                 todo.id = id;
                 this.todos.push(todo);
+
                 this.todosUpdated.next([...this.todos]);
                 this.router.navigate(["/"]);
 
@@ -76,6 +77,7 @@ export class TodosService {
             const oldTodoIndex = updatedTodos.findIndex(t => t.id === todo.id);
             updatedTodos[oldTodoIndex] = todo;
             this.todos = updatedTodos;
+            
             this.todosUpdated.next([...this.todos]);
             this.router.navigate(["/"]);
         });
