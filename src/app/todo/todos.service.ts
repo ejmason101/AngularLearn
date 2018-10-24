@@ -1,0 +1,77 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {Subject } from 'rxjs';
+import { map } from 'rxjs/operators'
+
+import { Todo } from './todo.model';
+
+// allows angjular to see at the root level, and it only creates 1 instance in the entire app
+// there would be multiple copies of the todos else
+@Injectable({providedIn: 'root'})
+export class TodosService {
+    
+    private todos: Todo[] = [];
+    private todosUpdated = new Subject<Todo[]>();
+
+    constructor(private http: HttpClient) {}
+
+    getTodos(){
+        this.http
+            .get<{message: string, todos: any}>(
+                'http://localhost:3000/api/todos'
+            )
+            .pipe(map((todoData) => {
+                return todoData.todos.map(todo => {
+                    return {
+                        title: todo.title,
+                        content: todo.content,
+                        id: todo._id
+                    };
+                });
+            }))
+            .subscribe((transformedTodos) => {
+                this.todos = transformedTodos;
+                this.todosUpdated.next([...this.todos]);
+            });
+    }
+
+    // returns listen, not emit
+    getTodoUpdateListener() {
+        return this.todosUpdated.asObservable();
+    }
+
+    addTodo(title: string, content: string) {
+        console.log('adding new todo');
+        const todo: Todo = {id: null, title: title, content: content};
+        
+        this.http
+            .post<{message: string, postId: string}>('http://localhost:3000/api/todos', todo)
+            .subscribe((responseData) => {
+                const id = responseData.postId;
+
+                todo.id = id;
+                // push new post to local post only if there was 
+                // success from the server
+                this.todos.push(todo);
+                this.todosUpdated.next([...this.todos]);
+
+            });
+    }
+
+    deleteTodo(todoId: string) {
+        var urlString = "http://localhost:3000/api/todos/" + todoId;
+        console.log(urlString);
+        this.http.delete(urlString)
+            .subscribe(() => {
+                console.log('http delete request finished');
+                // keep the elements that are not the same id
+                const updatedTodos = this.todos.filter(todo => todo.id !== todoId );
+                this.todos = updatedTodos;
+                console.log('updated todos list: ' + this.todos);
+
+                this.todosUpdated.next([...this.todos]);
+            })
+    }
+
+
+}

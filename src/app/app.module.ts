@@ -9,6 +9,8 @@ import { MatInputModule,
      MatExpansionModule
      } from '@angular/material';
 
+import { HttpClientModule } from "@angular/common/http";
+
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -32,7 +34,8 @@ import { HeaderComponent } from './header/header.component';
     MatCardModule,
     MatButtonModule,
     MatToolbarModule,
-    MatExpansionModule
+    MatExpansionModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

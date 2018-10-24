@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 
-import { Todo } from './todo/todo.model';
 
 
 @Component({
@@ -11,10 +10,4 @@ import { Todo } from './todo/todo.model';
 export class AppComponent {
   title = 'fayjones-lrs';
 
-  storedTodo: Post[] = [];
-
-  onTodoAdded(todo) {
-    // add post to parent 
-    this.storedTodo.push(todo);
-  }
 }

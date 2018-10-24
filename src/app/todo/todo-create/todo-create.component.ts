@@ -1,9 +1,9 @@
 // create blueprint for an object, never instantiated, angular will use and inst
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { NgForm } from '@angular/forms';
 
-import { Todo } from '../todo.model';
+import { TodosService } from '../todos.service';
 
 // attach to class to tell angular this is a component1
 @Component({
@@ -12,26 +12,18 @@ import { Todo } from '../todo.model';
   styleUrls: ['./todo-create.component.css']
 })
 export class TodoCreateComponent {
-  // defining class variables
   enteredContent = '';
   enteredTitle = '';
-  // newToDo = 'NO CONTENT';
-
-  @Output() todoCreated = new EventEmitter<Todo>();
   
+  constructor(public todosService: TodosService) {}
 
+  
   onAddTodo(form: NgForm) {
-    
     if(form.invalid)
       return;
-    const todo: Todo = {
-      title: form.value.title,
-      content: form.value.content
-    };
-
-    
-    this.todoCreated.emit(todo);
-
+        
+    this.todosService.addTodo(form.value.title, form.value.content);
+    form.resetForm();
 
   }
 }
