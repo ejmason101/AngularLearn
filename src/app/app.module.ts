@@ -19,6 +19,9 @@ import { TodoListComponent } from './todo/todo-list/todo-list.component';
 import { TodoCreateComponent } from './todo/todo-create/todo-create.component';
 import { HeaderComponent } from './header/header.component';
 
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +40,9 @@ import { HeaderComponent } from './header/header.component';
     MatToolbarModule,
     MatExpansionModule,
     HttpClientModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

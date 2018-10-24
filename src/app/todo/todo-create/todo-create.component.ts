@@ -1,11 +1,15 @@
 // create blueprint for an object, never instantiated, angular will use and inst
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ModuleWithComponentFactories } from '@angular/core';
 
 import { NgForm } from '@angular/forms';
 
 import { TodosService } from '../todos.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Todo } from '../todo.model';
+
+import * as _moment from 'moment';
+
+const moment = (_moment as any).default ? (_moment as any).default : _moment;
 
 // attach to class to tell angular this is a component1
 @Component({
@@ -16,6 +20,9 @@ import { Todo } from '../todo.model';
 export class TodoCreateComponent implements OnInit {
   enteredContent = "";
   enteredTitle = "";
+
+  public dateTime = Date;
+
   todo: Todo;
   isLoading = false;
   private mode = 'create';
