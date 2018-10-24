@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const todosRoutes = require("./routes/todos");
+
 
 const app = express();
 
@@ -14,6 +14,7 @@ mongoose.connect("mongodb://localhost:27017/ngLearn", { useNewUrlParser: true })
     })
     .catch(() => {
         console.log('Mongodb Connection Failed!');
+        return;
     });
 
 // parsing requests
@@ -34,6 +35,7 @@ app.use((req, res, next) => {
     next();
 });
 
+const todosRoutes = require("./routes/todos");
 
 app.use("/api/todos", todosRoutes);
 

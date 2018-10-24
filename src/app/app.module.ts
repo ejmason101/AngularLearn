@@ -7,7 +7,7 @@ import { MatInputModule,
     MatButtonModule,
      MatToolbarModule,
      MatExpansionModule,
-     MatProgressSpinnerModule
+     MatProgressSpinnerModule, MatSidenavModule, MatIconModule, MatListModule
      } from '@angular/material';
 
 import { HttpClientModule } from "@angular/common/http";
@@ -20,6 +20,8 @@ import { TodoCreateComponent } from './todo/todo-create/todo-create.component';
 import { HeaderComponent } from './header/header.component';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { MainNavComponent } from './main-nav/main-nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     AppComponent,
     TodoCreateComponent,
     TodoListComponent,
-    HeaderComponent
+    HeaderComponent,
+    MainNavComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,11 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     HttpClientModule,
     MatProgressSpinnerModule,
     OwlDateTimeModule,
-    OwlNativeDateTimeModule
+    OwlNativeDateTimeModule,
+    LayoutModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
