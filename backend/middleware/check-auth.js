@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
         
         // verify token
         jwt.verify(token, "kitt kats make me walk like im listening to bass music bro");
-        next(); // let the request continue   
+        next(); // let the request continue    
     
     } catch (error) {
         // no token

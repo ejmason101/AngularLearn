@@ -10,7 +10,7 @@ import { MatInputModule,
      MatProgressSpinnerModule, MatSidenavModule, MatIconModule, MatListModule, MatOption, MatOptionModule, MatSelect, MatSelectModule
      } from '@angular/material';
 
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -24,6 +24,7 @@ import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { AuthInterceptor } from './auth/auth-interceptor';
 
 
 @NgModule({
@@ -57,7 +58,9 @@ import { SignupComponent } from './auth/signup/signup.component';
     MatOptionModule,
     MatSelectModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

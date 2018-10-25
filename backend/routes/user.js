@@ -49,11 +49,12 @@ router.post("/login", (req, res, next) => {
                 email: fetchedUser.email,
                 userId: fetchedUser._id
             }, "kitt kats make me walk like im listening to bass music bro", {
-                expiresIn: "24h"
+                expiresIn: "1h"
             });
 
             res.status(200).json({
                 token: token,
+                expiresIn: 3600,
                 message: "User Auth Successful!"
             })
         })

@@ -9,16 +9,26 @@
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="!(isHandset$ | async)">
     <mat-toolbar id="side-nav-toolbar">Menu</mat-toolbar>
-    <mat-nav-list>
+
+    <!-- Shows if user is logged in -->
+    <mat-nav-list *ngIf="userIsAuthenticated">
       <!-- make this render based on a user value? -->
       <a mat-list-item routerLink="/" routerLinkActive="mat-accent">Todos</a>
       <a mat-list-item routerLink="/create">New Todo</a>
       <a mat-list-item routerLink="/login">Login</a>
       <a mat-list-item routerLink="/signup">SignUp</a>
+      <a mat-list-item routerLink="/">tmp</a>
       <a mat-list-item routerLink="/">Lasers</a>
-      <a mat-list-item routerLink="/">Lasers</a>
-
+      <button mat-button (click)="onLogout()">Logout</button>
     </mat-nav-list>
+
+    <!-- Shows if no user is logged in -->
+    <mat-nav-list *ngIf="!userIsAuthenticated">
+      <a mat-list-item routerLink="/login">Login</a>
+      <a mat-list-item routerLink="/status">Status</a>
+      <a mat-list-item routerLink="/about">About</a>
+    </mat-nav-list>
+
   </mat-sidenav>
 
   <mat-sidenav-content>

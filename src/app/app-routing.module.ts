@@ -5,6 +5,7 @@ import { TodoListComponent } from './todo/todo-list/todo-list.component';
 import { TodoCreateComponent } from './todo/todo-create/todo-create.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { AuthGuard } from './auth/auth.guard';
 
 
 /*
@@ -16,11 +17,13 @@ const routes: Routes = [
   },
   {
     path: 'create', // localhost:4200/create
-    component: TodoCreateComponent
+    component: TodoCreateComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'edit/:todoId',
-    component: TodoCreateComponent
+    component: TodoCreateComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -34,6 +37,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]   // so app.module.ts can use outside
+  exports: [RouterModule],   // so app.module.ts can use outside
+  providers: [AuthGuard]
 })
 export class AppRoutingModule { }

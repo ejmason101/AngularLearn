@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { Todo } from '../todo.model';
 import { TodosService } from "../todos.service";
+import { AuthService } from "src/app/auth/auth.service";
 
 @Component({
     selector: 'app-todo-list',
@@ -21,9 +22,13 @@ export class TodoListComponent implements OnInit, OnDestroy {
     
     todos: Todo[] = [];
     isLoading = false;
+    userIsAuthenticated = false;
     private todosSub: Subscription;
 
-    constructor(public todosService: TodosService) {}
+    // add listener
+    private authStatusSub: Subscription;
+
+    constructor(public todosService: TodosService, private authService: AuthService) {}
     
     ngOnInit(){
         this.isLoading = true;
@@ -34,6 +39,13 @@ export class TodoListComponent implements OnInit, OnDestroy {
                 this.isLoading = false;
                 this.todos = todos;
             });
+        this.userIsAuthenticated = this.authService.getIsAuth();
+        
+        this.authStatusSub = this.authService
+            .getAuthStatusListener()
+            .subscribe(isAuthenticated => {
+                this.userIsAuthenticated = isAuthenticated;
+            });
     }
 
     onDelete(todoId: string) {
@@ -42,6 +54,8 @@ export class TodoListComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(){
         this.todosSub.unsubscribe();
+
+        this.authStatusSub.unsubscribe();
     }
 
 }
