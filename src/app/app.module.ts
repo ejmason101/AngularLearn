@@ -7,7 +7,7 @@ import { MatInputModule,
     MatButtonModule,
      MatToolbarModule,
      MatExpansionModule,
-     MatProgressSpinnerModule, MatSidenavModule, MatIconModule, MatListModule
+     MatProgressSpinnerModule, MatSidenavModule, MatIconModule, MatListModule, MatOption, MatOptionModule, MatSelect, MatSelectModule
      } from '@angular/material';
 
 import { HttpClientModule } from "@angular/common/http";
@@ -22,6 +22,8 @@ import { HeaderComponent } from './header/header.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { LayoutModule } from '@angular/cdk/layout';
     TodoCreateComponent,
     TodoListComponent,
     HeaderComponent,
-    MainNavComponent
+    MainNavComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +53,9 @@ import { LayoutModule } from '@angular/cdk/layout';
     LayoutModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatOptionModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

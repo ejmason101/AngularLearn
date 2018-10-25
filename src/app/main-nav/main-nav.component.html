@@ -1,17 +1,28 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
+<!-- [ngClass]="{hidden: !(isHandset | async)!.matches}" -->
+  <mat-sidenav 
+    #drawer 
+    class="sidenav"
+    role="navigation"
+     fixedInViewport="false"
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="!(isHandset$ | async)">
-    <mat-toolbar>Menu</mat-toolbar>
+    <mat-toolbar id="side-nav-toolbar">Menu</mat-toolbar>
     <mat-nav-list>
+      <!-- make this render based on a user value? -->
       <a mat-list-item routerLink="/" routerLinkActive="mat-accent">Todos</a>
       <a mat-list-item routerLink="/create">New Todo</a>
-      <a mat-list-item routerLink="/">Link 3</a>
+      <a mat-list-item routerLink="/login">Login</a>
+      <a mat-list-item routerLink="/signup">SignUp</a>
+      <a mat-list-item routerLink="/">Lasers</a>
+      <a mat-list-item routerLink="/">Lasers</a>
+
     </mat-nav-list>
   </mat-sidenav>
+
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+    <mat-toolbar id="main-nav-toolbar">
       <button
         type="button"
         aria-label="Toggle sidenav"
@@ -23,5 +34,10 @@
       <span>Fay Jones LRS</span>
     </mat-toolbar>
     <!-- Add Content Here -->
+
+    <!-- Main angular router output here -->
+    <router-outlet></router-outlet>
+
   </mat-sidenav-content>
+
 </mat-sidenav-container>

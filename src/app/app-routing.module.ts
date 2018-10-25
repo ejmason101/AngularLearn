@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { TodoListComponent } from './todo/todo-list/todo-list.component';
 import { TodoCreateComponent } from './todo/todo-create/todo-create.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 
 /*
@@ -19,6 +21,14 @@ const routes: Routes = [
   {
     path: 'edit/:todoId',
     component: TodoCreateComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'signup',
+    component: SignupComponent
   }
 ];
 

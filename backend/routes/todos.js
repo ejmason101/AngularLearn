@@ -1,10 +1,12 @@
 const express = require("express");
 
 const Todo = require('../models/todo');
+const checkAuth = require('../middleware/check-auth');
 
 const router = express.Router();
 
-router.post("", (req, res, next) => {
+// create a new todo on the list
+router.post("", checkAuth, (req, res, next) => {
     console.log('POST: /api/todos');
 
     const newTodo = new Todo({
@@ -25,7 +27,7 @@ router.post("", (req, res, next) => {
 //.patch --> updates
 //.put --> whole new
 
-router.put("/:id", (req, res, next) => {
+router.put("/:id", checkAuth, (req, res, next) => {
     const todo = new Todo({
         _id: req.body.id,
         title: req.body.title,
@@ -64,11 +66,13 @@ router.get("/:id", (req, res, next) => {
     })
 })
 
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", checkAuth, (req, res, next) => {
+    // only admin or employee can delete
+
     // console.log(req.params.id);
     console.log("trying to delete id: " + req.params.id);
     Todo.findByIdAndDelete(req.params.id).then(result => {
-        console.log("modified: " );
+        console.log("deleted: " );
         console.log(result);
         console.log('/api/todos/:id delete successful!');
         res.status(200).json({message: 'post deleted!'});

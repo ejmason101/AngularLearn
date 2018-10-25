@@ -36,7 +36,9 @@ app.use((req, res, next) => {
 });
 
 const todosRoutes = require("./routes/todos");
+const userRoutes = require("./routes/user");
 
 app.use("/api/todos", todosRoutes);
+app.use("/api/user", userRoutes);
 
 module.exports = app;

@@ -15,3 +15,17 @@
   top: 0;
   z-index: 1;
 }
+
+#side-nav-toolbar {
+  background: #9D2235;
+  color:white;
+}
+
+#main-nav-toolbar {
+  background: #9D2235;
+  color: white;
+}
+
+.hidden {
+  display: none;
+}
