@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+
 import { AuthService } from '../auth.service';
 
+
+// selector: 'app-signup',
 @Component({
-    selector: 'app-signup',
     templateUrl: './signup.component.html',
     styleUrls: ['./signup.component.css']
 })
@@ -19,7 +21,10 @@ export class SignupComponent {
         if(form.invalid){
             return;
         }
+        // start the loading animation
         this.isLoading = true;
+
+        // use authService to communicate with the server
         this.authService.createUser(
             form.value.firstName,
             form.value.lastName,

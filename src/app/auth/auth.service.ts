@@ -52,11 +52,14 @@ export class AuthService {
         return this.token;
     }
 
-    createUser(firstname: string,lastname: string,
-          email: string,
-           password: string,
-            studentID: string,
-             phone: string) {
+    createUser(
+        // what is expected from the form
+        firstname: string,
+        lastname: string,
+        email: string,
+        password: string,
+        studentID: string,
+        phone: string) {
         
         const authData: AuthData = {
             firstname: firstname,
@@ -70,9 +73,13 @@ export class AuthService {
         // send request
         this.http
             .post<{message: string}>("http://localhost:3000/api/user/signup", authData)
-            .subscribe(response => {
-                console.log('auth service createUser')
-                console.log(response);
+            .subscribe((results) => {
+                console.log('create user successful');
+                console.log(results);
+                this.router.navigate["/"];
+            }, err => {
+                console.log('create user unsuccessful')
+                this.authStatusListener.next(false);
             });
     } // end create user
 
