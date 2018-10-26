@@ -13,10 +13,23 @@ import { AuthService } from '../auth/auth.service';
 @Injectable({providedIn: 'root'})
 export class TodosService {
     
+    // holds the list of Todos recieved from the server
     private todos: Todo[] = [];
+
+    /*
+        Services, how angular achieves multicasting
+            multicasting is forwarding 'notifications'
+            from one obseervable to one or more destination observers
+    
+    
+    */
+
     private todosUpdated = new Subject<Todo[]>();
 
-    constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
+    constructor(
+        private http: HttpClient,
+        private router: Router,
+        private authService: AuthService) {}
 
     getTodos(){
         this.http
@@ -24,19 +37,29 @@ export class TodosService {
                 'http://localhost:3000/api/todos'
             )
             .pipe(map((todoData) => {
+                // maps the return data to objects in the 
+                // second return
                 return todoData.todos.map(todo => {
+                    // take deadlineDAte and create date object
+                    let deadlineDate = new Date(todo.deadline);
                     return {
                         title: todo.title,
                         content: todo.content,
                         id: todo._id,
                         creator: todo.creator,
-                        deadline: todo.deadline
+                        deadline: deadlineDate
                     };
                 });
             }))
             .subscribe((transformedTodos) => {
-                console.log("todos: " + transformedTodos);
+                // takes the new list of Todos in the right format
+                console.log("todos: ");
+                console.log(transformedTodos);
+
+                // set service todos to the 
+                // correct format todos
                 this.todos = transformedTodos;
+                // send a copy of 
                 this.todosUpdated.next([...this.todos]);
             });
     }

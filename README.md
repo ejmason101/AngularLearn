@@ -7,7 +7,8 @@ Datepicker: https://www.npmjs.com/package/ng-pick-datetime
 
 
 
-
+For times stored in the db, storing as timezone Z
+    for real times just -5 to get CST
 
 
 

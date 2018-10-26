@@ -21,13 +21,12 @@ export class TodoCreateComponent implements OnInit {
   enteredContent = "";
   enteredTitle = "";
 
-  // deadline: Date;
-  // deadline = "test";
-
   todo: Todo;
   isLoading = false;
   private mode = 'create';
   private todoId: string;
+
+  public deadline = new moment();
 
   
   constructor(
@@ -79,7 +78,12 @@ export class TodoCreateComponent implements OnInit {
     
     this.isLoading = true;
     if (this.mode == 'create') {
-      this.todosService.addTodo(form.value.title, form.value.content, form.value.deadline);
+      console.log('creating TODO with deadline of');
+      console.log(form.value.deadline);
+      this.todosService.addTodo(
+        form.value.title,
+        form.value.content,
+        form.value.deadline);
     } else {
       this.todosService.updateTodo(
         this.todoId,

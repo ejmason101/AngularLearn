@@ -19,7 +19,7 @@ import { TodoListComponent } from './todo/todo-list/todo-list.component';
 import { TodoCreateComponent } from './todo/todo-create/todo-create.component';
 import { HeaderComponent } from './header/header.component';
 
-import { OwlDateTimeModule } from 'ng-pick-datetime';
+import { OwlDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -69,7 +69,8 @@ export const MY_MOMENT_FORMATS = {
     MatSelectModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    { provide: OWL_DATE_TIME_LOCALE, useValue: 'en'}
   ],
   bootstrap: [AppComponent]
 })

@@ -34,7 +34,9 @@ export class TodoListComponent implements OnInit, OnDestroy {
     private todosSub: Subscription;
     private authStatusSub: Subscription;
 
-    constructor(public todosService: TodosService, private authService: AuthService) {}
+    constructor(
+        public todosService: TodosService,
+        private authService: AuthService) {}
     
     ngOnInit(){
         this.isLoading = true;
