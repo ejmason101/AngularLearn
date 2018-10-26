@@ -8,7 +8,8 @@ module.exports = (req, res, next) => {
         const token = req.headers.authorization.split(" ")[1]; // Bearer a;lksdjf;lkajs;ldkf
         
         // verify token
-        jwt.verify(token, "kitt kats make me walk like im listening to bass music bro");
+        const decodedToken = jwt.verify(token, "kitt kats make me walk like im listening to bass music bro");
+        req.userData = { email: decodedToken.email , userId: decodedToken.userId};
         next(); // let the request continue    
     
     } catch (error) {

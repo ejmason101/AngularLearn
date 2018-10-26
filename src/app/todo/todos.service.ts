@@ -27,11 +27,14 @@ export class TodosService {
                     return {
                         title: todo.title,
                         content: todo.content,
-                        id: todo._id
+                        id: todo._id,
+                        creator: todo.creator,
+                        deadline: todo.deadline
                     };
                 });
             }))
             .subscribe((transformedTodos) => {
+                console.log("todos: " + transformedTodos);
                 this.todos = transformedTodos;
                 this.todosUpdated.next([...this.todos]);
             });
@@ -44,15 +47,16 @@ export class TodosService {
 
     // get to edit
     getTodo(id: string) {
-        return this.http.get<{ _id: string; title: string; content: string }>(
+        return this.http.get<{ _id: string; title: string; content: string; deadline: Date}>(
             'http://localhost:3000/api/todos/' + id
             );
     }
 
-    addTodo(title: string, content: string) {
-        console.log('adding new todo');
-        const todo: Todo = {id: null, title: title, content: content};
-        
+    addTodo(title: string, content: string, deadline: Date) {
+        console.log('todos.service addTodo');
+        const todo: Todo = {id: null, title: title, content: content, deadline: deadline};
+        console.log(todo);
+
         this.http
             .post<{message: string, postId: string}>('http://localhost:3000/api/todos', todo)
             .subscribe((responseData) => {
@@ -66,8 +70,8 @@ export class TodosService {
             });
     }
 
-    updateTodo(id: string, title: string, content: string) {
-        const todo: Todo = { id: id, title: title, content: content};
+    updateTodo(id: string, title: string, content: string, deadline: Date) {
+        const todo: Todo = { id: id, title: title, content: content, deadline: deadline};
         console.log('updateTodo');
         this.http
         .put("http://localhost:3000/api/todos/" + id, todo)

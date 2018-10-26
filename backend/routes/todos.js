@@ -5,16 +5,21 @@ const checkAuth = require('../middleware/check-auth');
 
 const router = express.Router();
 
-// create a new todo on the list
+/* create a new todo on the list 
+    CREATE NEW TODO
+*/
 router.post("", checkAuth, (req, res, next) => {
     console.log('POST: /api/todos');
 
     const newTodo = new Todo({
         title: req.body.title,
-        content: req.body.content
+        content: req.body.content,
+        creator: req.userData.userId,
+        deadline: req.body.deadline
     });
 
     newTodo.save().then(createdTodo => {
+        console.log("Saved TODO to db: ");
         console.log(createdTodo);
         res.status(201).json({
             message: 'Todo Added Successfully',
@@ -26,18 +31,24 @@ router.post("", checkAuth, (req, res, next) => {
 
 //.patch --> updates
 //.put --> whole new
-
+// UPDATE TODO 
 router.put("/:id", checkAuth, (req, res, next) => {
     const todo = new Todo({
         _id: req.body.id,
         title: req.body.title,
-        content: req.body.content
+        content: req.body.content,
+        deadline: req.body.deadline
     })
-    Todo.updateOne({ _id: req.params.id }, todo).then(result => {
-        console.log("updated successfully id: " + req.params.id);
+    Todo.updateOne({ _id: req.params.id, creator: req.userData.userId}, todo).then(result => {
         console.log(result);
-
-        res.status(200).json({ message: "Update Successful!"});
+        if(result.n == 0) {
+            console.log("no update occured!");
+            return res.status(401).json({ message: "User not authorized to edit todo!"});
+        } else {
+            console.log('update todo successful');
+            res.status(200).json({ message: "Update Successful!"});
+        }
+       
     })
 })
 
@@ -71,11 +82,23 @@ router.delete("/:id", checkAuth, (req, res, next) => {
 
     // console.log(req.params.id);
     console.log("trying to delete id: " + req.params.id);
-    Todo.findByIdAndDelete(req.params.id).then(result => {
-        console.log("deleted: " );
-        console.log(result);
-        console.log('/api/todos/:id delete successful!');
-        res.status(200).json({message: 'post deleted!'});
+    console.log("with user ID of: " + req.userData.userId )
+    Todo.findOneAndDelete({ _id: req.params.id, creator: req.userData.userId})
+        .then(result => {
+            console.log("within delete post user check");
+            console.log(result);
+            if(!result) {
+                console.log("find and delete failed");
+                return res.status(401).json({message: 'user not owner of todo!'});
+            }
+            if(result.n) {
+                console.log("todo delete successful!");
+                res.status(200).json({message: 'post deleted!'});
+            } else {
+                console.log("todo delete failed");
+                res.status(401).json({message: 'user not owner of todo!'});
+            }
+        
     });    
 });
 

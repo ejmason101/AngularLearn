@@ -21,7 +21,8 @@ export class TodoCreateComponent implements OnInit {
   enteredContent = "";
   enteredTitle = "";
 
-  public dateTime = Date;
+  // deadline: Date;
+  // deadline = "test";
 
   todo: Todo;
   isLoading = false;
@@ -43,17 +44,23 @@ export class TodoCreateComponent implements OnInit {
         // extract id and use, in edit mode
         this.mode = 'edit';
         this.todoId = paramMap.get('todoId');
+        console.log('editMode todo-create deadline param:');
+        
+        // this.deadline = new Date(paramMap.get('deadline'));
         
         // start showing loading here
         this.isLoading = true;
         // this.todo = this.todosService.getTodo(this.todoId).subscribe();
         this.todosService.getTodo(this.todoId).subscribe(todoData => {
           // stop showing loading here
+          console.log("todo-create ngOnInit todo-create in edit mode:  " + todoData);
+          console.log(todoData);
           this.isLoading = false;
           this.todo = {
             id: todoData._id,
             title: todoData.title,
-            content: todoData.content  
+            content: todoData.content,
+            deadline: todoData.deadline
           };
         })
 
@@ -71,12 +78,13 @@ export class TodoCreateComponent implements OnInit {
     
     this.isLoading = true;
     if (this.mode == 'create') {
-      this.todosService.addTodo(form.value.title, form.value.content);
+      this.todosService.addTodo(form.value.title, form.value.content, form.value.deadline);
     } else {
       this.todosService.updateTodo(
         this.todoId,
         form.value.title,
-        form.value.content 
+        form.value.content,
+        form.value.deadline
       );
     }
 

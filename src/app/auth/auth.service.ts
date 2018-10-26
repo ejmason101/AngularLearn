@@ -14,7 +14,8 @@ export class AuthService {
 
     private token: string;
     private isAuthenticated = false; 
-    private tokenTimer: NodeJS.Timer;
+    private tokenTimer: NodeJS.Timer; // change to any if it complaigns
+
     // use subject to push auth info to compoinents that are interested
     private authStatusListener = new Subject<boolean>(); // is the user authed or not
 
@@ -75,15 +76,42 @@ export class AuthService {
                         this.isAuthenticated = true;
                         this.authStatusListener.next(true); // inform everyone
                         
-                        this.tokenTimer = setTimeout(() => {
-                            // clear token when it expires
-                            this.logout();
-                        }, expiresInDuration * 1000);
+                        // sets token timer
+                        this.setAuthTimer(expiresInDuration);
 
-                        
+                        // saves AuthData to local storage
+                        const now = new Date();
+                        const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+                        this.saveAuthData(token, expirationDate);
                         this.router.navigate(['/']);
                     }  
                 });
+    }
+
+    // tries to auth user using local storage
+    autoAuthUser() {
+        const authInformation = this.getAuthData();
+        if(!authInformation) {
+            // no stored info
+            return;
+        }
+
+        // check if the token is still valid
+        const now = new Date();
+        console.log("Current Date() at autoAuth: ");
+        console.log(now);
+        const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
+        // check if date is in the FuTuRe
+        console.log("autoAuthUser()");
+        console.log(authInformation, expiresIn);
+
+        if(expiresIn > 0) {
+            this.token = authInformation.token;
+            this.isAuthenticated = true;
+            this.setAuthTimer(expiresIn/1000);
+            this.authStatusListener.next(true); // tell everyone auth is successful
+
+        }
     }
 
     logout() {
@@ -95,7 +123,41 @@ export class AuthService {
 
         // clears token timer when logged out manually
         clearTimeout(this.tokenTimer);
-
+        this.clearAuthData();
         this.router.navigate(['/']);
+    }
+
+    // to save token to browser localStorage to presist data
+    private saveAuthData(token: string, expirationDate: Date ) {
+        localStorage.setItem('token', token);
+        localStorage.setItem('expiration', expirationDate.toISOString());
+    }
+
+    private clearAuthData() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('expiration');
+    }
+
+    private getAuthData() {
+        const token = localStorage.getItem('token');
+        const expirationDate = localStorage.getItem('expiration');
+
+        if ( !token || !expirationDate) {
+            return;
+        }
+        // if ;they exist
+        return {
+            token: token,
+            expirationDate: new Date(expirationDate)
+        }
+    }
+
+    private setAuthTimer(duration: number) {
+        console.log("Setting time: " + duration);
+
+        this.tokenTimer = setTimeout(() => {
+            // clear token when it expires
+            this.logout();
+        }, duration * 1000);
     }
 }

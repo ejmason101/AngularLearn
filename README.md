@@ -1,6 +1,7 @@
 ## Documentation
 Angular
 Datepicker: https://www.npmjs.com/package/ng-pick-datetime
+            https://danielykpan.github.io/date-time-picker/
 
 
 
