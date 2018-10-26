@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators'
 import { Router } from "@angular/router";
 
 import { Todo } from './todo.model';
+import { AuthService } from '../auth/auth.service';
 
 // allows angjular to see at the root level, and it only creates 1 instance in the entire app
 // there would be multiple copies of the todos else
@@ -15,7 +16,7 @@ export class TodosService {
     private todos: Todo[] = [];
     private todosUpdated = new Subject<Todo[]>();
 
-    constructor(private http: HttpClient, private router: Router) {}
+    constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
 
     getTodos(){
         this.http
@@ -47,14 +48,26 @@ export class TodosService {
 
     // get to edit
     getTodo(id: string) {
-        return this.http.get<{ _id: string; title: string; content: string; deadline: Date}>(
+        return this.http.get<{ 
+            _id: string;
+             title: string;
+              content: string;
+              deadline: Date;
+              creator: string;
+            }>(
             'http://localhost:3000/api/todos/' + id
             );
     }
 
     addTodo(title: string, content: string, deadline: Date) {
         console.log('todos.service addTodo');
-        const todo: Todo = {id: null, title: title, content: content, deadline: deadline};
+        const todo: Todo = {
+            id: null,
+             title: title,
+              content: content,
+               deadline: deadline,
+               creator: null
+            };
         console.log(todo);
 
         this.http
@@ -71,14 +84,20 @@ export class TodosService {
     }
 
     updateTodo(id: string, title: string, content: string, deadline: Date) {
-        const todo: Todo = { id: id, title: title, content: content, deadline: deadline};
+        const todo: Todo = { 
+            id: id,
+             title: title,
+              content: content,
+               deadline: deadline,
+               creator: this.authService.getUserId()
+            };
         console.log('updateTodo');
         this.http
         .put("http://localhost:3000/api/todos/" + id, todo)
         .subscribe(response => {
             // update local posts
             const updatedTodos = [...this.todos];
-            const oldTodoIndex = updatedTodos.findIndex(t => t.id === todo.id);
+            const oldTodoIndex = updatedTodos.findIndex(t => t.id === id);
             updatedTodos[oldTodoIndex] = todo;
             this.todos = updatedTodos;
             

@@ -60,7 +60,8 @@ export class TodoCreateComponent implements OnInit {
             id: todoData._id,
             title: todoData.title,
             content: todoData.content,
-            deadline: todoData.deadline
+            deadline: todoData.deadline,
+            creator: todoData.creator
           };
         })
 
@@ -85,6 +86,7 @@ export class TodoCreateComponent implements OnInit {
         form.value.title,
         form.value.content,
         form.value.deadline
+        
       );
     }
 

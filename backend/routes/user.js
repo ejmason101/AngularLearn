@@ -47,7 +47,7 @@ router.post("/login", (req, res, next) => {
             // give them a valid json token
             const token = jwt.sign({
                 email: fetchedUser.email,
-                userId: fetchedUser._id
+                userId: fetchedUser._id,
             }, "kitt kats make me walk like im listening to bass music bro", {
                 expiresIn: "1h"
             });
@@ -55,6 +55,13 @@ router.post("/login", (req, res, next) => {
             res.status(200).json({
                 token: token,
                 expiresIn: 3600,
+                userId: fetchedUser._id,
+                firstName: fetchedUser.firstname,
+                lastName: fetchedUser.lastname,
+                email: fetchedUser.email,
+                studentID: fetchedUser.studentID,
+                phone: fetchedUser.phone,
+                userLevel: fetchedUser.userLevel,
                 message: "User Auth Successful!"
             })
         })

@@ -22,10 +22,16 @@ export class TodoListComponent implements OnInit, OnDestroy {
     
     todos: Todo[] = [];
     isLoading = false;
-    userIsAuthenticated = false;
-    private todosSub: Subscription;
 
-    // add listener
+    userIsAuthenticated = false;
+    userId: string;
+
+    /*
+        Listeners for 
+            1. todosSub -- Changes to the Todos being displayed
+            2. authStatusSub -- Changes in Loggedin Status
+    */
+    private todosSub: Subscription;
     private authStatusSub: Subscription;
 
     constructor(public todosService: TodosService, private authService: AuthService) {}
@@ -33,7 +39,9 @@ export class TodoListComponent implements OnInit, OnDestroy {
     ngOnInit(){
         this.isLoading = true;
         this.todosService.getTodos();        
+        this.userId = this.authService.getUserId();
 
+        // runs whenever the todosService gets updated
         this.todosSub = this.todosService.getTodoUpdateListener()
             .subscribe((todos: Todo[]) => {
                 this.isLoading = false;
@@ -41,10 +49,12 @@ export class TodoListComponent implements OnInit, OnDestroy {
             });
         this.userIsAuthenticated = this.authService.getIsAuth();
         
+        // runs whenever the authService state changes
         this.authStatusSub = this.authService
             .getAuthStatusListener()
             .subscribe(isAuthenticated => {
                 this.userIsAuthenticated = isAuthenticated;
+                this.userId = this.authService.getUserId();
             });
     }
 

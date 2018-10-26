@@ -37,7 +37,8 @@ router.put("/:id", checkAuth, (req, res, next) => {
         _id: req.body.id,
         title: req.body.title,
         content: req.body.content,
-        deadline: req.body.deadline
+        deadline: req.body.deadline,
+        creator: req.userData.userId
     })
     Todo.updateOne({ _id: req.params.id, creator: req.userData.userId}, todo).then(result => {
         console.log(result);
@@ -81,6 +82,7 @@ router.delete("/:id", checkAuth, (req, res, next) => {
     // only admin or employee can delete
 
     // console.log(req.params.id);
+    console.log('\n /api/todos/delete/:id');
     console.log("trying to delete id: " + req.params.id);
     console.log("with user ID of: " + req.userData.userId )
     Todo.findOneAndDelete({ _id: req.params.id, creator: req.userData.userId})
@@ -90,13 +92,9 @@ router.delete("/:id", checkAuth, (req, res, next) => {
             if(!result) {
                 console.log("find and delete failed");
                 return res.status(401).json({message: 'user not owner of todo!'});
-            }
-            if(result.n) {
-                console.log("todo delete successful!");
-                res.status(200).json({message: 'post deleted!'});
             } else {
-                console.log("todo delete failed");
-                res.status(401).json({message: 'user not owner of todo!'});
+                console.log("todo delete successful");
+                res.status(200).json({message: 'user not owner of todo!'});
             }
         
     });    
