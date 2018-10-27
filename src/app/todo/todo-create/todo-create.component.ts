@@ -1,5 +1,5 @@
 // create blueprint for an object, never instantiated, angular will use and inst
-import { Component, OnInit, ModuleWithComponentFactories } from '@angular/core';
+import { Component, OnInit, ModuleWithComponentFactories, OnDestroy } from '@angular/core';
 
 import { NgForm } from '@angular/forms';
 
@@ -8,6 +8,8 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Todo } from '../todo.model';
 
 import * as _moment from 'moment';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 
 const moment = (_moment as any).default ? (_moment as any).default : _moment;
 
@@ -17,7 +19,7 @@ const moment = (_moment as any).default ? (_moment as any).default : _moment;
   templateUrl: './todo-create.component.html',
   styleUrls: ['./todo-create.component.css']
 })
-export class TodoCreateComponent implements OnInit {
+export class TodoCreateComponent implements OnInit, OnDestroy {
   enteredContent = "";
   enteredTitle = "";
 
@@ -25,17 +27,25 @@ export class TodoCreateComponent implements OnInit {
   isLoading = false;
   private mode = 'create';
   private todoId: string;
+  private authStatusSub: Subscription;
+
 
   public deadline = new moment();
 
   
   constructor(
     public todosService: TodosService,
-     public route: ActivatedRoute
+     public route: ActivatedRoute,
+     public authService: AuthService
   ) {}
 
   // runs when component is rendered
   ngOnInit() {
+    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(
+      authStatus => {
+        this.isLoading = false;
+      }
+    );
     // determingin if in 'create' or 'edit' mode
     // executed whenever the url params change
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -97,4 +107,10 @@ export class TodoCreateComponent implements OnInit {
     form.resetForm();
 
   }
+
+
+  ngOnDestroy() {
+    this.authStatusSub.unsubscribe();
+  }
+
 }

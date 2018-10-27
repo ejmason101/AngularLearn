@@ -1,5 +1,17 @@
+.card-container {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
 mat-card {
-    width: 80%;
+    margin: 25px 30px ;
+    width: 65%;
+}
+
+mat-card-title {
+    background-color: #9D2235;
+    padding:7px;
+    color: white;
 }
 
 mat-form-field {
@@ -8,4 +20,8 @@ mat-form-field {
 
 mat-spinner {
     margin: auto;
+}
+
+mat-card-title {
+    text-align:center;
 }

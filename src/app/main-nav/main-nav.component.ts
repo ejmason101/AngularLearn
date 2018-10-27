@@ -19,7 +19,8 @@ export class MainNavComponent implements OnInit, OnDestroy{
       map(result => result.matches)
     );
 
-  constructor(private breakpointObserver: BreakpointObserver,
+  constructor(
+    private breakpointObserver: BreakpointObserver,
     private authService: AuthService) {}
 
 

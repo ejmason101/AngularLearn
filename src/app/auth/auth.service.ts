@@ -31,7 +31,8 @@ export class AuthService {
     constructor(private http: HttpClient, private router: Router) {}
 
     getUserId() {
-        console.log('getUserID() :' + this.user);
+        console.log('getUserID() :');
+        console.log(this.user);
         if(!this.user){
             // no user logged in presently
             return null;
@@ -59,7 +60,8 @@ export class AuthService {
         email: string,
         password: string,
         studentID: string,
-        phone: string) {
+        phone: string,
+        userLevel: string) {
         
         const authData: AuthData = {
             firstname: firstname,
@@ -67,9 +69,13 @@ export class AuthService {
             email: email,
             password: password,
             studentID: studentID,
-            phone: phone
+            phone: phone,
+            userLevel: userLevel
         }
         
+        console.log("Sending this authData to server to create new user: ");
+        console.log(authData);
+
         // send request
         this.http
             .post<{message: string}>("http://localhost:3000/api/user/signup", authData)
@@ -112,7 +118,8 @@ export class AuthService {
                         const expiresInDuration = response.expiresIn;
                         console.log('token ttl: ' + expiresInDuration);
                         this.isAuthenticated = true;
-                        
+                        console.log('userLevel:' + response.userLevel);
+                    
                         this.user = {
                             userId: response.userId,
                             firstname: response.firstName,
@@ -134,6 +141,9 @@ export class AuthService {
                         this.saveAuthData(token, expirationDate, this.user);
                         this.router.navigate(['/']);
                     }  
+                }, error => {
+                    console.log(error);
+                    this.authStatusListener.next(false);
                 });
     }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
+import { SidenavService } from './main-nav/main-nav.service';
 
 // this component gets loaded when app starts
 

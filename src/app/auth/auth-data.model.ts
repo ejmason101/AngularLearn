@@ -11,4 +11,5 @@ export interface AuthData {
     password: string;
     studentID: string;
     phone: string;
+    userLevel: string;
 }

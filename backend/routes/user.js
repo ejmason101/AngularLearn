@@ -6,6 +6,7 @@ const router = express.Router();
 
 const User = require("../models/user");
 
+// login user
 // :/api/user/login
 router.post("/login", (req, res, next) => {
     console.log('/api/user/login');
@@ -22,7 +23,7 @@ router.post("/login", (req, res, next) => {
                 // user does not exist
                 // console.log('User email does not exist');
                 return res.status(401).json({
-                    message: "Auth Failed!"
+                    message: "Auth Failed! No Email exists!"
                 })
             }
             // user was found
@@ -40,7 +41,7 @@ router.post("/login", (req, res, next) => {
                 // passwords dont match
                 console.log('Password mismatch');
                 return res.status(401).json({
-                    message: "Auth Failed!"
+                    message: "Auth Failed! Password Mismatch"
                 });
             }
             // we have valid password
@@ -51,6 +52,9 @@ router.post("/login", (req, res, next) => {
             }, "kitt kats make me walk like im listening to bass music bro", {
                 expiresIn: "1h"
             });
+
+            console.log("Result from attempt at login:");
+            console.log(fetchedUser);
 
             res.status(200).json({
                 token: token,
@@ -70,7 +74,7 @@ router.post("/login", (req, res, next) => {
             console.log(err);
             console.log('final catch');
             return res.status(401).json({
-                message: "Auth Failed! No User Email Foun"
+                message: "Auth Failed! No User Email Found"
             });
         });
 });
@@ -78,6 +82,9 @@ router.post("/login", (req, res, next) => {
 // create new user
 router.post("/signup", (req, res, next) => {
     // create new user and store to database
+
+    console.log("create user data");
+    console.log(req.body);
 
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
@@ -87,20 +94,20 @@ router.post("/signup", (req, res, next) => {
                 email: req.body.email,
                 password: hash,
                 studentID: req.body.studentID,
-                phone: req.body.phone
+                phone: req.body.phone,
+                userLevel: req.body.userLevel
             });
             user.save()
                 .then(result => {
+                    console.log("created new user successfully");
                     res.status(201).json({
-                        message: "User Created!",
+                        message: "User Created Successfull!",
                         result: result
                     });
                 })
                 .catch(err => {
-                    res.status(500).json({
-                        message: "User Email Alread Exists",
-                        error:err
-                    })
+                    console.log("new user create failed");
+                    res.status(500).json({message: "User Email Alread Exists"})
                 });
         })
     
