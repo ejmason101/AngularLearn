@@ -1,4 +1,16 @@
-<mat-card>
+<div layout-fill layout="column" layout-align="center none">
+    <div layout="row" layout-align="center none">
+
+<mat-card class="signupCard">
+
+        <mat-card-title>
+            Manually Create New User
+        </mat-card-title>
+
+        <mat-card-subtitle>
+            This is for development purposes
+        </mat-card-subtitle>
+
         <mat-spinner *ngIf="isLoading"></mat-spinner>
     
         <form (submit)="onSignup(signupForm)" #signupForm="ngForm" *ngIf="!isLoading">
@@ -65,7 +77,8 @@
                     placeholder="User Level"
                     name="userLevel"
                     matInput
-                    ngModel>
+                    ngModel
+                    required>
                     <mat-option *ngFor="let level of levels" [value]=level>
                         {{ level }}
                     </mat-option>
@@ -77,3 +90,7 @@
             
         </form>
     </mat-card>
+
+    </div>
+
+    </div>

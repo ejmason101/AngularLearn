@@ -1,27 +1,10 @@
-.card-container {
-    display: flex;
-    flex-flow: column nowrap;
-}
-
-mat-card {
-    margin: 25px 30px ;
-    width: 65%;
-}
-
-mat-card-title {
-    background-color: #9D2235;
-    padding:7px;
-    color: white;
+.loginCard {
+    max-width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 70px;
 }
 
 mat-form-field {
     width: 100%;
-}
-
-mat-spinner {
-    margin: auto;
-}
-
-mat-card-title {
-    text-align:center;
 }

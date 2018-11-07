@@ -1,31 +1,37 @@
-.sidenav-container {
-  height: 100%;
+
+.spacer {
+  flex: 1 1 auto;
 }
 
-.sidenav {
-  width: 200px;
-}
-
-.sidenav .mat-toolbar {
-  background: inherit;
-}
-
-.mat-toolbar.mat-primary {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
 
 #side-nav-toolbar {
   background: #9D2235;
   color:white;
 }
 
+mat-sidenav-container {
+  height: 100%;
+}
 #main-nav-toolbar {
   background: #9D2235;
   color: white;
 }
 
-.hidden {
-  display: none;
+button {
+  font-size-adjust: 5px;
+}
+
+.mat-toolbar{
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #9D2235;
+}
+
+mat-sidenav {
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
 }

@@ -82,7 +82,7 @@ export class AuthService {
             .subscribe((results) => {
                 console.log('create user successful');
                 console.log(results);
-                this.router.navigate["/"];
+                this.router.navigate(['/']);
             }, err => {
                 console.log('create user unsuccessful')
                 this.authStatusListener.next(false);

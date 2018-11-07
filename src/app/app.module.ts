@@ -15,19 +15,15 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { TodoListComponent } from './todo/todo-list/todo-list.component';
-import { TodoCreateComponent } from './todo/todo-create/todo-create.component';
-import { HeaderComponent } from './header/header.component';
 
 import { OwlDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
 import { MainNavComponent } from './main-nav/main-nav.component';
-import { LayoutModule } from '@angular/cdk/layout';
-import { LoginComponent } from './auth/login/login.component';
-import { SignupComponent } from './auth/signup/signup.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
 import { ErrorComponent } from './error/error.component';
+import { TodosModule } from './todo/todos.module';
+import { AngularMaterialModule } from './angular-material.module';
 
 export const MY_MOMENT_FORMATS = {
   parseInput: 'l LT',
@@ -42,35 +38,16 @@ export const MY_MOMENT_FORMATS = {
 @NgModule({
   declarations: [
     AppComponent,
-    TodoCreateComponent,
-    TodoListComponent,
-    HeaderComponent,
     MainNavComponent,
-    LoginComponent,
-    SignupComponent,
     ErrorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
     BrowserAnimationsModule,
-    MatInputModule,
-    MatCardModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatExpansionModule,
     HttpClientModule,
-    MatProgressSpinnerModule,
-    OwlDateTimeModule,
-    OwlMomentDateTimeModule,
-    LayoutModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatOptionModule,
-    MatSelectModule,
-    MatDialogModule
+    AngularMaterialModule,
+    TodosModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

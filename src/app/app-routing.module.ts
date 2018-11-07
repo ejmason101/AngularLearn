@@ -3,8 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { TodoListComponent } from './todo/todo-list/todo-list.component';
 import { TodoCreateComponent } from './todo/todo-create/todo-create.component';
-import { LoginComponent } from './auth/login/login.component';
-import { SignupComponent } from './auth/signup/signup.component';
 import { AuthGuard } from './auth/auth.guard';
 
 
@@ -12,7 +10,7 @@ import { AuthGuard } from './auth/auth.guard';
 path '' -- localhost:3000/
 */
 const routes: Routes = [
-  { path: '',
+  { path: "",
     component:  TodoListComponent
   },
   {
@@ -25,14 +23,8 @@ const routes: Routes = [
     component: TodoCreateComponent,
     canActivate: [AuthGuard]
   },
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'signup',
-    component: SignupComponent
-  }
+  { path: "auth", loadChildren: "./auth/auth.module#AuthModule"}
+
 ];
 
 @NgModule({

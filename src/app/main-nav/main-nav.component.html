@@ -1,54 +1,73 @@
-<mat-sidenav-container class="sidenav-container">
-<!-- [ngClass]="{hidden: !(isHandset | async)!.matches}" -->
-  
-  <mat-sidenav 
-    #drawer 
-    class="sidenav"
-    role="navigation"
-     fixedInViewport="false"
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="!(isHandset$ | async)">
-    <mat-toolbar id="side-nav-toolbar">Menu</mat-toolbar>
-
-    <!-- Shows if user is logged in -->
-    <mat-nav-list *ngIf="userIsAuthenticated">
-      <!-- make this render based on a user value? -->
-      <a mat-list-item routerLink="/" routerLinkActive="mat-accent">Todos</a>
-      <a mat-list-item routerLink="/create">New Todo</a>
-      <a mat-list-item routerLink="/login">Login</a>
-      <a mat-list-item routerLink="/signup">SignUp</a>
-      <a mat-list-item routerLink="/">tmp</a>
-      <a mat-list-item routerLink="/">Lasers</a>
-      <button mat-button (click)="onLogout()">Logout</button>
-    </mat-nav-list>
-
-    <!-- Shows if no user is logged in -->
-    <mat-nav-list *ngIf="!userIsAuthenticated">
-      <a mat-list-item routerLink="/login">Login</a>
-      <a mat-list-item routerLink="/status">Status</a>
-      <a mat-list-item routerLink="/about">About</a>
-    </mat-nav-list>
-
-  </mat-sidenav>
-
-  <mat-sidenav-content>
-    <mat-toolbar id="main-nav-toolbar">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+<div style="height: 90vh;">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+        <mat-icon>menu</mat-icon>
       </button>
-      <span>Fay Jones LRS</span>
-    </mat-toolbar>
-    <!-- Add Content Here -->
+      <span>FJLRS</span>
+      <span class="spacer"></span>
+      <!-- <div fxShow="true" fxHide.lt-md>
+        The following menu items will be hidden on both SM and XS screen sizes
+        <button mat-menu-item>Status</button>
+        <a href="#" mat-button>Menu Item 2</a>
+        <a href="#" mat-button>Menu Item 3</a>
+        <a href="#" mat-button>Menu Item 4</a>
+        <a href="#" mat-button>Menu Item 5</a>
+        <a href="#" mat-button>Menu Item 6</a>
+      </div> -->
+<!-- 
+  <button mat-button
+    *ngIf="userIsAuthenticated"
+    [matMenuTriggerFor]="laserMenu">Lasers</button>
 
-    <!-- Main angular router output here -->
-    <router-outlet></router-outlet>
+  <mat-menu #laserMenu="matMenu">
+    <button mat-menu-item>Status</button>
+    <button mat-menu-item>Lab Schedule</button>
+    <button mat-menu-item>Pricing/Mats</button>
+    <button mat-menu-item>Helpful Docs</button>
 
-  </mat-sidenav-content>
+  </mat-menu> -->
 
-</mat-sidenav-container>
+  <button mat-button
+      *ngIf="!userIsAuthenticated"
+      [routerLink]="['/auth/login']">Login</button>
+
+
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+
+
+
+  <!--  collapasable sidebar nav Content-->
+  <mat-sidenav-container >
+    <mat-sidenav #sidenav>
+
+      <mat-nav-list>
+
+        
+
+        
+<!-- 
+        <a href="#" mat-list-item>Menu Item 1</a>
+        <a href="#" mat-list-item>Menu Item 2</a>
+        <a href="#" mat-list-item>Menu Item 3</a>
+        <a href="#" mat-list-item>Menu Item 4</a>
+        <a href="#" mat-list-item>Menu Item 5</a>
+        <a href="#"mat-list-item>Menu Item 6</a> -->
+
+
+        <a *ngIf="!userIsAuthenticated"  [routerLink]="['/auth/login']" mat-list-item>Login</a>
+        <a *ngIf="userIsAuthenticated" (click)="onLogout()" mat-list-item>Logout</a>
+        <a mat-list-item>Contact Admin</a>
+        <a (click)="sidenav.toggle()"  mat-list-item>Close Nav</a>
+
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+</div>
