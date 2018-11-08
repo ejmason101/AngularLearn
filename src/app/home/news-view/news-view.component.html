@@ -3,10 +3,9 @@
         Lab News
     </mat-card-title>
 
-    <mat-accordion multi="true">
+    <mat-accordion multi="false">
 
         <mat-expansion-panel *ngFor="let newsPost of news">
-
             <mat-expansion-panel-header>
                     <mat-panel-title>
                         {{ newsPost.title }}
@@ -16,14 +15,12 @@
                         {{ newsPost.postedDate }}
                     </mat-panel-description>
             </mat-expansion-panel-header>
-            
             <p>
                 {{ newsPost.content }}
             </p>
             <a mat-button *ngIf="userIsAuthenticated && userLevel == 'admin'"
                 color="primary"
                 [routerLink]="['']">Edit Post</a>
-
         </mat-expansion-panel>
         
     </mat-accordion>

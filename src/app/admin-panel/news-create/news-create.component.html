@@ -1,0 +1,38 @@
+<mat-card>
+        <mat-spinner *ngIf="isLoading"></mat-spinner>
+        <form (submit)="onSaveNews(todoForm)" #todoForm="ngForm" *ngIf="!isLoading">
+    
+            <mat-form-field>
+                <mat-label>News Title</mat-label>
+                <input
+                 matInput
+                 type="text"
+                 name="title"
+                 [ngModel]="todo?.title"
+                 required
+                 #title="ngModel">
+                 <mat-error *ngIf="title.invalid">Enter corrent title</mat-error>
+            </mat-form-field>
+        
+            <mat-form-field>
+                <mat-label>Body of News Article</mat-label>
+                <textarea
+                 matInput
+                 rows="6"
+                 name="content"
+                 [ngModel]="todo?.content"
+                 required
+                 #content="ngModel"></textarea>
+                 <mat-error *ngIf="content.invalid">Enter corrent content</mat-error>
+    
+            </mat-form-field>
+    
+            <button
+                mat-raised-button
+                color="accent"
+                type="submit">Save News Article
+            </button>
+    
+        </form>
+        
+    </mat-card>

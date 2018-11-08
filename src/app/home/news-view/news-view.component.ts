@@ -20,9 +20,10 @@ export class NewsView implements OnInit, OnDestroy {
     public userLevel = "default";
     userIsAuthenticated = false;
 
-    news: News[] = [];
+    public news: News[] = [];
 
     private authStatusSub: Subscription;
+    private newsSub: Subscription;
 
     // todos = [
     //     { title: 'First Todo', content: 'First Todo Content '},
@@ -40,6 +41,7 @@ export class NewsView implements OnInit, OnDestroy {
 
        this.userLevel = this.authService.getUserLevel();
        this.userIsAuthenticated = this.authService.getIsAuth();
+       this.newsService.getNews();
 
        this.authStatusSub = this.authService
             .getAuthStatusListener()
@@ -49,23 +51,12 @@ export class NewsView implements OnInit, OnDestroy {
             });
 
         console.log("news items:");
-        this.news = [
-            {
-                title: "New Ceramic Printer!",
-                content: "Check out this link to see the new printer in action!",
-                postedDate: "October 29, 2018"
-            },
-            {
-                title: "New Ceramic Printer!",
-                content: "Check out this link to see the new printer in action!",
-                postedDate: "October 29, 2018"
-            },
-            {
-                title: "New Ceramic Printer!",
-                content: "Check out this link to see the new printer in action!",
-                postedDate: "October 29, 2018"
-            }
-        ];
+        this.newsSub = this.newsService.getNewsUpdateListener()
+            .subscribe((news: News[]) => {
+                this.isLoading = false;
+                this.news = news;
+            });
+        
         console.log(this.news);
     }
 

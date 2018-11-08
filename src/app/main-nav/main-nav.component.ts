@@ -12,6 +12,7 @@ import { AuthService } from '../auth/auth.service';
 export class MainNavComponent implements OnInit, OnDestroy{
   private authListenerSubs: Subscription;
   userIsAuthenticated = false;
+  userLevel = "default";
 
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -27,11 +28,13 @@ export class MainNavComponent implements OnInit, OnDestroy{
   ngOnInit() {
     // to get initial auth value
     this.userIsAuthenticated = this.authService.getIsAuth();
+    this.userLevel = this.authService.getUserLevel();
     // setup subscription to userAuth status
     this.authListenerSubs = this.authService
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
+        this.userLevel = this.authService.getUserLevel();
       });
   }
 

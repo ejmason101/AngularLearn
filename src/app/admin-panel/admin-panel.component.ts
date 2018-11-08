@@ -4,12 +4,12 @@ import { Subscription } from 'rxjs';
 
 @ViewChild('sidenav')
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.css']
+    selector: 'app-admin-panel',
+    templateUrl: './admin-panel.component.html',
+    styleUrls: ['./admin-panel.component.css']
 })
 
-export class HomeComponent implements OnInit, OnDestroy {
+export class AdminPanelComponent implements OnInit, OnDestroy {
     isLoading = false;
     
     private authStatusSub: Subscription;

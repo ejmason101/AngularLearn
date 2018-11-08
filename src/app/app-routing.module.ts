@@ -11,14 +11,14 @@ import { HomeComponent } from './home/home.component';
 path '' -- localhost:3000/
 */
 const routes: Routes = [
-  { path: "", loadChildren: "./home/home.module#HomeModule", canActivate: [AuthGuard]
-  },
+  { path: "", loadChildren: "./home/home.module#HomeModule",},
+  { path: "admin", loadChildren: "./admin-panel/admin-panel.module#AdminPanelModule", canActivate: [AuthGuard] },
   { path: "auth", loadChildren: "./auth/auth.module#AuthModule"}
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes)], //, { enableTracing: true }
   exports: [RouterModule],   // so app.module.ts can use outside
   providers: [AuthGuard]
 })

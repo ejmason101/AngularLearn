@@ -31,6 +31,11 @@
         <a *ngIf="userIsAuthenticated"  [routerLink]="['/']" mat-list-item>Home</a>
 
 
+        <!-- If User is an admin -->
+        <a *ngIf="userIsAuthenticated && userLevel == 'admin'"  [routerLink]="['/admin']" mat-list-item>Admin Panel</a>
+
+
+
         <a *ngIf="!userIsAuthenticated"  [routerLink]="['/auth/login']" mat-list-item>Login</a>
         <a *ngIf="userIsAuthenticated" (click)="onLogout()" mat-list-item>Logout</a>
         <a mat-list-item>Contact Admin</a>
