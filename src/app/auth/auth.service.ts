@@ -41,6 +41,17 @@ export class AuthService {
         }
     }
 
+    getUserLevel() {
+        console.log('getUserLevel() :');
+        console.log(this.user);
+        if(!this.user){
+            // no user logged in presently
+            return "default";
+        } else {
+            return this.user.userLevel;
+        }
+    }
+
     getAuthStatusListener() {
         return this.authStatusListener.asObservable();
     }

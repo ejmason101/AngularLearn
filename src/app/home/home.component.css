@@ -1,0 +1,22 @@
+/* .flex-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    width: 90%;
+    margin: auto;
+    width: 90%;
+    margin: auto;
+
+}  */
+/* 
+app-news-view {
+    width: 60%;
+}
+ */
+
+ .container {
+     width: 90%;
+     margin: auto;
+     background-color: pink;
+ }

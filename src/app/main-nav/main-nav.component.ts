@@ -36,6 +36,7 @@ export class MainNavComponent implements OnInit, OnDestroy{
   }
 
   onLogout() {
+    console.log("onLogout() --> authService.logout()");
     // clear token
     // inform all parts about auth change
     this.authService.logout();

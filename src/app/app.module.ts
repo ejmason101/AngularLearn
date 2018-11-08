@@ -24,6 +24,9 @@ import { ErrorInterceptor } from './error-interceptor';
 import { ErrorComponent } from './error/error.component';
 import { TodosModule } from './todo/todos.module';
 import { AngularMaterialModule } from './angular-material.module';
+import { HomeModule } from './home/home.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { RouterModule } from '@angular/router';
 
 export const MY_MOMENT_FORMATS = {
   parseInput: 'l LT',
@@ -43,11 +46,12 @@ export const MY_MOMENT_FORMATS = {
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
     AngularMaterialModule,
-    TodosModule
+    TodosModule,
+    AppRoutingModule
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
