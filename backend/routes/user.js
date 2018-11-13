@@ -114,7 +114,37 @@ router.post("/signup", (req, res, next) => {
     
 
 
-}) 
+});
+
+// Development route to create new admin user
+router.get("/createAdminUser", (req, res, next) => {
+    console.log("create new admin user with email admin@uark.edu and password test");
+
+    bcrypt.hash("test", 10)
+        .then(hash => {
+            const user = new User({
+                firstname: "ADMIN",
+                lastname: "USER",
+                email: "admin@uark.edu",
+                password: hash,
+                studentID: "000000000",
+                phone: "000000000",
+                userLevel: "admin"
+            });
+            user.save()
+                .then(result => {
+                    console.log("created new admin user successfully");
+                    res.status(201).json({
+                        message: "User Created Successfull!",
+                        result: result
+                    });
+                })
+                .catch(err => {
+                    console.log("new user create failed");
+                    res.status(500).json({message: "User Email Alread Exists"})
+                });
+        })
+})
 
 
 

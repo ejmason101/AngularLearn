@@ -7,7 +7,7 @@ const uniqueValidator = require("mongoose-unique-validator");
 var userSchema = mongoose.Schema({
         firstname: String,
         lastname: String,
-        studentID: Number,
+        studentID: String,
         phone: String,
         email: { type: String, require: true, unique: true},
         password: String,
@@ -22,7 +22,11 @@ var userSchema = mongoose.Schema({
                 price: Number,
                 created_at: {type: Date, required: true, default: Date}
             }
-        ]
+        ],
+        laserLab01: Boolean,
+        woodShop01: Boolean,
+        woodShop02: Boolean,
+        woodShop03: Boolean
 });
 
 userSchema.plugin(uniqueValidator);
