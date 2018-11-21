@@ -33,6 +33,8 @@ export class NewsService {
         private router: Router,
         private authService: AuthService) {}
 
+    // getNews() -- returns all news articles
+    // getNews(id:string) -- returns news with that 
     
 
     // ----------- GETs HERE --> Single and All
@@ -53,7 +55,7 @@ export class NewsService {
                 });
             }))
             .subscribe((transformedNews) => {
-                console.log("News: ");
+                console.log("getNews() : ");
                 console.log(transformedNews);
 
                 // set the news stored in instance of this service
@@ -75,16 +77,12 @@ export class NewsService {
     }
 
 
-    getNewsUpdateListener(){
-        return this.newsUpdated.asObservable();
-    }
-
     // ------------ POSTING NEWS ARTICLE
     addNewsArticle(
         title: string,
         content: string
     ) {
-        
+        console.log('news.service addNewsArticle():');
         let postDate = new Date().toString();
         const newNews: News = {
             id: null,
@@ -92,7 +90,6 @@ export class NewsService {
             content: content,
             postedDate: postDate
         }
-        console.log('addNewsArticle() --> adding single news article');
         console.log(newNews);
 
         // make the http request to the backen
@@ -108,55 +105,42 @@ export class NewsService {
                 this.newsUpdated.next([...this.news]);
                 // TODO MAYBE ADD REDIRECT HERE?
             });
-    }
-    updateNewsArticle(
-        id: string,
-        title: string,
-        content: string) {
-            let updateDate = new Date().toString();
-            // Update a specific article in the DB
-            const updateNews: News = {
-                id: id,
-                title: title,
-                content: content,
-                postedDate: updateDate
-            }
-            console.log("updateNewsArticle() --> updating single news article");
-            console.log(updateNews);
-        
-            this.http
-            .put("http://localhost:3000/api/news/" + id, updateNews)
-            .subscribe(response => {
-                const updatedNews = [...this.news];
-                const oldNewsIndex = updatedNews.findIndex(n => n.id === id);
-                // console.log("setting this: ");
-                // console.log(updatedNews[oldNewsIndex]);
-                // console.log("to updated value: ");
-                // console.log(updateNews);
-                updatedNews[oldNewsIndex] = updateNews;
-                this.news = updatedNews;
-                this.newsUpdated.next([...this.news]); // sending the correct dataset to all subscribers
-                
-            })
-        
-        }
-
-
-        // DELETE news article
-    deleteNewsArticle(newsId: string) {
-        var urlString = "http://localhost:3000/api/news/" + newsId;
-        console.log("deleting post --> ");
-        console.log(urlString);
-        this.http.delete(urlString)
-            .subscribe(() => {
-                console.log('http delete request finished');
-                // keep the elements that are not the same id
-                const updatedNews = this.news.filter(newsArt => newsArt.id !== newsId );
-                this.news = updatedNews;
-                console.log('updated news list: ' + this.news);
-
-                this.newsUpdated.next([...this.news]);
-            })
     };
 
+    // POST update on newsArticle to server
+    updateNewsArticle(
+    id: string,
+    title: string,
+    content: string) {
+        let updateDate = new Date().toString();
+        // Update a specific article in the DB
+        const updateNews: News = {
+            id: id,
+            title: title,
+            content: content,
+            postedDate: updateDate
+        }
+        console.log("updateNews");
+        console.log(updateNews);
+    
+        this.http
+        .put("http://localhost:3000/api/news/" + id, updateNews)
+        .subscribe(response => {
+            const updatedNews = [...this.news];
+            const oldNewsIndex = updatedNews.findIndex(n => n.id === id);
+            updatedNews[oldNewsIndex] = updateNews;
+
+            this.newsUpdated.next([...this.news]);
+    
+        })
+    
+    };
+
+    
+
+
+
+    getNewsUpdateListener(){
+        return this.newsUpdated.asObservable();
+    }
 }
