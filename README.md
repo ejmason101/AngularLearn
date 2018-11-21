@@ -10,7 +10,16 @@ Datepicker: https://www.npmjs.com/package/ng-pick-datetime
 For times stored in the db, storing as timezone Z
     for real times just -5 to get CST
 
+# MVP TODO for 2019!
 
+1. Add user search and edit functionality...
+2. Add user training levels
+3. Scheduler
+4. Lab checkin portal
+
+## For Deployment
+1. Package app together and build a docker
+2. Add env variables for the mongo connection and prod
 
 
 
