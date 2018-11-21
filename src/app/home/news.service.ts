@@ -153,7 +153,8 @@ export class NewsService {
                 // keep the elements that are not the same id
                 const updatedNews = this.news.filter(newsArt => newsArt.id !== newsId );
                 this.news = updatedNews;
-                console.log('updated news list: ' + this.news);
+                console.log('updated news list: ');
+                console.log(this.news);
 
                 this.newsUpdated.next([...this.news]);
             })

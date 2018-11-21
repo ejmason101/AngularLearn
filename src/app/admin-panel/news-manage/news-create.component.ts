@@ -142,6 +142,7 @@ export class NewsCreateComponent implements OnInit, OnDestroy {
     }
     else {
       this.newsService.deleteNewsArticle(this.newsId);
+      this.mode = 'create';
       form.resetForm();
     }
     

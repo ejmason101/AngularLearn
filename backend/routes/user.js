@@ -2,6 +2,8 @@ const express = require('express');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const checkAuth = require("../middleware/check-auth");
+
 const router = express.Router();
 
 const User = require("../models/user");
@@ -89,14 +91,16 @@ router.post("/signup", (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
-                firstname: req.body.firstName,
-                lastname: req.body.lastName,
+                firstname: req.body.firstname,
+                lastname: req.body.lastname,
                 email: req.body.email,
                 password: hash,
                 studentID: req.body.studentID,
                 phone: req.body.phone,
                 userLevel: req.body.userLevel
             });
+            console.log("user being saved to db");
+            console.log(user);
             user.save()
                 .then(result => {
                     console.log("created new user successfully");
@@ -144,9 +148,81 @@ router.get("/createAdminUser", (req, res, next) => {
                     res.status(500).json({message: "User Email Alread Exists"})
                 });
         })
+}); // end create admin user
+
+router.get("/createEmployeeUser", (req, res, next) => {
+    console.log("create new Employee user with email Employee@uark.edu and password test");
+
+    bcrypt.hash("test", 10)
+        .then(hash => {
+            const user = new User({
+                firstname: "Employee",
+                lastname: "User",
+                email: "employee@uark.edu",
+                password: hash,
+                studentID: "1212121212",
+                phone: "000000000",
+                userLevel: "employee"
+            });
+            user.save()
+                .then(result => {
+                    console.log("created new admin user successfully");
+                    res.status(201).json({
+                        message: "User Created Successfull!",
+                        result: result
+                    });
+                })
+                .catch(err => {
+                    console.log("new user create failed");
+                    res.status(500).json({message: "User Email Alread Exists"})
+                });
+        })
+}); // end create admin user
+
+router.get("/createStudentUser", (req, res, next) => {
+    console.log("create new student user with email student@uark.edu and password test");
+
+    bcrypt.hash("test", 10)
+        .then(hash => {
+            const user = new User({
+                firstname: "Student",
+                lastname: "User ",
+                email: "student@uark.edu",
+                password: hash,
+                studentID: "123456789",
+                phone: "000000000",
+                userLevel: "student"
+            });
+            user.save()
+                .then(result => {
+                    console.log("created new admin user successfully");
+                    res.status(201).json({
+                        message: "User Created Successfull!",
+                        result: result
+                    });
+                })
+                .catch(err => {
+                    console.log("new user create failed");
+                    res.status(500).json({message: "User Email Alread Exists"})
+                });
+        })
+}); // end create admin user
+
+// TODO MAKE NEW USERS
+// GET@ /api/users
+router.get("", checkAuth, (req, res, next) => {
+    console.log('GET @ /api/users');
+    console.log('returning list of all users');
+    
+    User.find({}).then(result => {
+        console.log('result of getallUsers');
+        console.log(result);
+        res.status(201).json({
+            message: "All Users fetched successfully",
+            result: result
+        });
+    })
 })
-
-
 
 
 

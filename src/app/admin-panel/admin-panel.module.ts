@@ -7,10 +7,11 @@ import { AuthModule } from "../auth/auth.module";
 import { NgModule } from "@angular/core";
 import { AdminPanelComponent } from "./admin-panel.component";
 import { NewsCreateComponent } from "./news-manage/news-create.component";
-import { NewsView } from "./news-view/news-view.component";
+// import { NewsView } from "./news-view/news-view.component";
+import { UserViewComponent } from "./users-view/user-view.component";
 
 @NgModule({
-    declarations: [ AdminPanelComponent, NewsCreateComponent, NewsView],
+    declarations: [ AdminPanelComponent, NewsCreateComponent, UserViewComponent],
     imports: [CommonModule, AngularMaterialModule, FormsModule, FlexLayoutModule,
          AuthModule, AdminPanelRoutingModule]
 })
