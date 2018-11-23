@@ -11,6 +11,8 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class TodayView implements OnInit, OnDestroy {
     isLoading = false;
 
+    currentDate;
+    loggedUserName;
     public myNav: any;
 
     private authStatusSub: Subscription;
@@ -21,11 +23,35 @@ export class TodayView implements OnInit, OnDestroy {
 
     ngOnInit() {
        // TODO load the data here and 
+
+       // setting current date in DD/MM/YY format
+		 this.currentDateMMDDYYYY();
+       
+       // get name of current logged in user
+		 this.loggedUserName = this.authService.getUserFullName();
+		 console.log("logged user name");
+		 console.log(this.loggedUserName);
     }
 
  
 
     ngOnDestroy() {
 
-    }
+	 }
+	 
+	 currentDateMMDDYYYY() {
+		var today = new Date();
+		let dd = today.getDate();
+		let mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+		
+		if(dd<10) {
+			 dd = Number('0'+dd);
+		} 
+		
+		if(mm<10) {
+			 mm = Number('0'+mm);
+		}
+		this.currentDate = mm + '/' + dd + '/' + yyyy;
+	 }
 }

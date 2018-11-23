@@ -41,6 +41,19 @@ export class AuthService {
         }
     }
 
+    getUserFullName() {
+        console.log('getUserFullName()');
+        if(!this.user){
+            return null; // no user logged in?
+        } else {
+            let fullName = this.user.firstname + " " + this.user.lastname;
+            console.log(fullName);
+            return fullName;
+        }
+
+
+    }
+
     getUserLevel() {
         console.log('getUserLevel() :');
         console.log(this.user);
