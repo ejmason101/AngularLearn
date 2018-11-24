@@ -4,9 +4,10 @@
         </mat-card-title>
     
         <mat-card-content>
-            <p>Hello, {{ loggedUserName }} </p>
+            <p *ngIf="!userIsAuthenticated">Welcome, Guest</p>            
+            <p *ngIf="userIsAuthenticated">Hello, {{ loggedUserName }} </p>
             <p>Current Date: {{ currentDate }} </p>
-            <p>Other Stuff here</p>
+            <p>Moar stuff here as time moves on</p>
         </mat-card-content>
     
     </mat-card>

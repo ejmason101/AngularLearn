@@ -23,7 +23,7 @@ export class NewsCreateComponent implements OnInit, OnDestroy {
 
   news: News;
   isLoading = false;
-  private mode = 'create';
+  mode = 'create';
   private newsId: string;
   private authStatusSub: Subscription;
   private newsSub: Subscription;
@@ -57,38 +57,6 @@ export class NewsCreateComponent implements OnInit, OnDestroy {
     });
         
     console.log(this.news); //has been undefinded?
-
-    // determingin if in 'create' or 'edit' mode
-    // // executed whenever the url params change
-    // this.route.paramMap.subscribe((paramMap: ParamMap) => {
-    //   if (paramMap.has('todoId')) {
-    //     // extract id and use, in edit mode
-    //     this.mode = 'edit';
-    //     this.newsId = paramMap.get('todoId');
-    //     console.log('editMode todo-create deadline param:');
-        
-    //     this.isLoading = true;
-    //     // this.todo = this.todosService.getTodo(this.todoId).subscribe();
-    //     this.newsService.getNewsArticle(this.newsId).subscribe(newsArticles => {
-    //       // stop showing loading here
-    //       console.log("todo-create ngOnInit todo-create in edit mode:  " + newsArticles);
-    //       console.log(newsArticles);
-    //       this.isLoading = false;
-    //       this.news = {
-    //         id: newsArticles._id,
-    //         title: newsArticles.title,
-    //         content: newsArticles.content,
-    //         postedDate: newsArticles.postedDate
-    //         // TODO ADD postedDate here, then get the loadAll working in news-view
-    //       };
-    //     })
-
-    //   } else {
-    //     // there is no 'newsId' in the url params
-    //     this.mode = 'create';
-    //     this.newsId = null;
-    //   }
-    // });
   }
   
   onSaveNews(form: NgForm) {

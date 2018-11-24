@@ -20,7 +20,7 @@
                  [ngModel]="news?.title"
                  required
                  #title="ngModel">
-                 <mat-error *ngIf="title.invalid">Enter corrent title</mat-error>
+                 <mat-error *ngIf="title.invalid">Enter Valid Title</mat-error>
             </mat-form-field>
         
             <mat-form-field>
@@ -32,7 +32,7 @@
                  [ngModel]="news?.content"
                  required
                  #content="ngModel"></textarea>
-                 <mat-error *ngIf="content.invalid">Enter corrent content</mat-error>
+                 <mat-error *ngIf="content.invalid">Enter Valid Content</mat-error>
     
             </mat-form-field>
     

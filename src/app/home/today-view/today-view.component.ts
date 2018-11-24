@@ -9,6 +9,11 @@ import { AuthService } from 'src/app/auth/auth.service';
     styleUrls: ['./today-view.component.css']
 })
 export class TodayView implements OnInit, OnDestroy {
+
+   private authListenerSubs: Subscription;
+   userIsAuthenticated = false;
+   userLevel = "default";
+
     isLoading = false;
 
     currentDate;
@@ -24,23 +29,34 @@ export class TodayView implements OnInit, OnDestroy {
     ngOnInit() {
        // TODO load the data here and 
 
+	   this.userIsAuthenticated = this.authService.getIsAuth();
+    	this.userLevel = this.authService.getUserLevel();
        // setting current date in DD/MM/YY format
 		 this.currentDateMMDDYYYY();
-       
+		
+
        // get name of current logged in user
 		 this.loggedUserName = this.authService.getUserFullName();
 		 console.log("logged user name");
 		 console.log(this.loggedUserName);
+
+		 this.authListenerSubs = this.authService
+			.getAuthStatusListener()
+			.subscribe(isAuthenticated => {
+				this.userIsAuthenticated = isAuthenticated;
+				this.userLevel = this.authService.getUserLevel();
+			});
+	  
     }
 
  
 
     ngOnDestroy() {
-
+		
 	 }
 	 
 	 currentDateMMDDYYYY() {
-		var today = new Date();
+      var today = new Date();
 		let dd = today.getDate();
 		let mm = today.getMonth()+1; //January is 0!
 		var yyyy = today.getFullYear();

@@ -85,7 +85,22 @@ export class NewsService {
         content: string
     ) {
         
-        let postDate = new Date().toString();
+        var today = new Date();
+		let dd = today.getDate();
+		let mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+		
+		if(dd<10) {
+			 dd = Number('0'+dd);
+		} 
+		
+		if(mm<10) {
+			 mm = Number('0'+mm);
+		}
+		let postDate = mm + '/' + dd + '/' + yyyy;
+	 
+        console.log("news article date: ");
+        console.log(postDate);
         const newNews: News = {
             id: null,
             title: title,
@@ -159,5 +174,7 @@ export class NewsService {
                 this.newsUpdated.next([...this.news]);
             })
     };
+
+    
 
 }
